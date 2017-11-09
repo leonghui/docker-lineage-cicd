@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM debian:stretch
 MAINTAINER Nicola Corna <nicola@corna.info>
 
 # Environment variables
@@ -28,7 +28,7 @@ ENV USE_CCACHE 1
 # for no limit.
 ENV CCACHE_SIZE 50G
 
-# Environment for the LineageOS Branch name
+# Environment for the LineageOS branches name
 # See https://github.com/LineageOS/android_vendor_cm/branches for possible options
 ENV BRANCH_NAME 'cm-14.1'
 
@@ -150,15 +150,18 @@ RUN mkdir -p $USERSCRIPTS_DIR
 
 # Install build dependencies
 ############################
+RUN echo 'deb http://deb.debian.org/debian sid main' >> /etc/apt/sources.list
+RUN echo 'deb http://deb.debian.org/debian experimental main' >> /etc/apt/sources.list
+COPY apt_preferences /etc/apt/preferences
 RUN apt-get -qq update
 RUN apt-get -qqy upgrade
 
 RUN apt-get install -y bc bison build-essential ccache cron curl flex \
       g++-multilib gcc-multilib git gnupg gperf imagemagick lib32ncurses5-dev \
-      lib32readline6-dev lib32z1-dev libesd0-dev liblz4-tool libncurses5-dev \
+      lib32readline-dev lib32z1-dev libesd0-dev liblz4-tool libncurses5-dev \
       libsdl1.2-dev libssl-dev libwxgtk3.0-dev libxml2 libxml2-utils lzop \
-      maven openjdk-8-jdk pngcrush rsync schedtool squashfs-tools wget xdelta3 \
-      xsltproc zip zlib1g-dev
+      maven openjdk-7-jdk openjdk-8-jdk pngcrush procps python rsync schedtool \
+      squashfs-tools wget xdelta3 xsltproc zip zlib1g-dev
 
 RUN curl https://storage.googleapis.com/git-repo-downloads/repo > /usr/local/bin/repo
 RUN chmod a+x /usr/local/bin/repo
