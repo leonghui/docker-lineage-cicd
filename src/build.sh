@@ -57,10 +57,6 @@ fi
 
 if [ "$USE_MIRROR" = true ]; then
 
-  mkdir -p "$TMP_DIR/device"
-  mkdir -p "$TMP_DIR/workdir"
-  mkdir -p "$TMP_DIR/merged"
-
   cd "$MIRROR_DIR"
 
   if [ ! -d .repo ]; then
@@ -254,6 +250,7 @@ for branch in $BRANCH_NAME; do
         fi
 
         if [ "$BUILD_OVERLAY" = true ]; then
+          mkdir -p "$TMP_DIR/{device,workdir,merged}"
           mount -t overlay overlay -o lowerdir="$SRC_DIR/$branch_dir",upperdir="$TMP_DIR/device",workdir="$TMP_DIR/workdir" "$TMP_DIR/merged"
           source_dir="$TMP_DIR/merged"
         else
@@ -353,10 +350,11 @@ for branch in $BRANCH_NAME; do
         fi
 
         echo ">> [$(date)] Cleaning source dir for device $codename" >> "$DEBUG_LOG" 2>&1
-        cd "$source_dir"
         if [ "$BUILD_OVERLAY" = true ]; then
-          rm -rf "$TMP_DIR/device/*"
+          cd "$TMP_DIR"
+          rm -rf "$TMP_DIR/*"
         else
+          cd "$source_dir"
           mka clean >> "$DEBUG_LOG" 2>&1
         fi
 
