@@ -68,6 +68,9 @@ ENV CLEAN_OUTDIR false
 # For example, '0 10 * * *' means 'Every day at 10:00 UTC'
 ENV CRONTAB_TIME 'now'
 
+# Clean artifacts output after each build
+ENV CLEAN_AFTER_BUILD true
+
 # Provide root capabilities builtin inside the ROM (see http://lineageos.org/Update-and-Build-Prep/)
 ENV WITH_SU false
 

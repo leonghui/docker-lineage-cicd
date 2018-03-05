@@ -349,13 +349,15 @@ for branch in $BRANCH_NAME; do
           umount "$TMP_DIR/merged"
         fi
 
-        echo ">> [$(date)] Cleaning source dir for device $codename" >> "$DEBUG_LOG" 2>&1
-        if [ "$BUILD_OVERLAY" = true ]; then
-          cd "$TMP_DIR"
-          rm -rf "$TMP_DIR/*"
-        else
-          cd "$source_dir"
-          mka clean >> "$DEBUG_LOG" 2>&1
+        if [ "$CLEAN_AFTER_BUILD" = true ]; then
+          echo ">> [$(date)] Cleaning source dir for device $codename" >> "$DEBUG_LOG" 2>&1
+          if [ "$BUILD_OVERLAY" = true ]; then
+            cd "$TMP_DIR"
+            rm -rf "$TMP_DIR/*"
+          else
+            cd "$source_dir"
+            mka clean >> "$DEBUG_LOG" 2>&1
+          fi
         fi
 
       fi
