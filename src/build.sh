@@ -250,7 +250,7 @@ for branch in $BRANCH_NAME; do
         fi
 
         if [ "$BUILD_OVERLAY" = true ]; then
-          mkdir -p "$TMP_DIR/{device,workdir,merged}"
+          mkdir -p "$TMP_DIR/device" "$TMP_DIR/workdir" "$TMP_DIR/merged"
           mount -t overlay overlay -o lowerdir="$SRC_DIR/$branch_dir",upperdir="$TMP_DIR/device",workdir="$TMP_DIR/workdir" "$TMP_DIR/merged"
           source_dir="$TMP_DIR/merged"
         else
