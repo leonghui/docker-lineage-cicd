@@ -351,7 +351,7 @@ for branch in $BRANCH_NAME; do
         fi
 
         if [ "$CLEAN_AFTER_BUILD" = true ]; then
-          echo ">> [$(date)] Cleaning source dir for device $codename" &>> "$DEBUG_LOG"
+          echo ">> [$(date)] Cleaning source dir for device $codename" | tee -a "$DEBUG_LOG"
           if [ "$BUILD_OVERLAY" = true ]; then
             cd "$TMP_DIR"
             rm -rf "$TMP_DIR/*"
