@@ -33,7 +33,7 @@ fi
 # If requested, clean the OUT dir in order to avoid clutter
 if [ "$CLEAN_OUTDIR" = true ]; then
   echo ">> [$(date)] Cleaning '$ZIP_DIR'"
-  rm "$ZIP_DIR/*"
+  rm "$ZIP_DIR/"*
 fi
 
 # Treat DEVICE_LIST as DEVICE_LIST_<first_branch>
@@ -354,7 +354,7 @@ for branch in $BRANCH_NAME; do
           echo ">> [$(date)] Cleaning source dir for device $codename" | tee -a "$DEBUG_LOG"
           if [ "$BUILD_OVERLAY" = true ]; then
             cd "$TMP_DIR"
-            rm -rf "$TMP_DIR/*"
+            rm -rf "$TMP_DIR/"*
           else
             cd "$source_dir"
             mka clean &>> "$DEBUG_LOG"
